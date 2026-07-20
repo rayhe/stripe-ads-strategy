@@ -514,6 +514,16 @@ li strong { color: var(--text-primary); }
       <p>This is not a greenfield opportunity. CitrusAd (acquired by Epsilon/Publicis), Criteo Retail Media, Kevel, and Promote IQ (Microsoft) already offer retail media infrastructure to mid-market retailers. The payment processor's advantage is the integration: if a retailer already processes payments through the processor, adding the retail media layer requires no new data integration. The transaction data is already flowing.</p>
 
       <p>Platform fee: 15-25% of ad revenue generated through the white-label platform. A $2B regional grocer generating $50M in retail media revenue yields $7.5-$12.5M to the processor annually.</p>
+
+      <h4>Programmatic Demand Integration</h4>
+      <p>A mid-market retailer launching a retail media network faces an immediate demand problem: its own sales team cannot sell enough inventory. The solution is programmatic demand. The processor's retail media platform must integrate with the major demand-side platforms (DSPs) through standard programmatic pipes:</p>
+      <ul>
+        <li><strong>Supply-side platform (SSP) integration</strong> via OpenRTB 2.6, the current IAB standard for real-time bidding. The processor operates the SSP layer, making retailer inventory available to DSP buyers.</li>
+        <li><strong>The Trade Desk, DV360, Amazon DSP, and Xandr</strong> are the primary programmatic demand sources. Each requires a specific integration (API partnership, deal ID setup, audience taxonomy mapping). Timeline: 3-6 months per DSP integration.</li>
+        <li><strong>Prebid Server</strong> (open-source header bidding) enables simultaneous bid requests to multiple demand sources, maximizing fill rate and yield for retailer inventory.</li>
+        <li><strong>Private Marketplace (PMP) deals</strong> let advertisers pre-negotiate rates and access retailer-specific audience segments at a premium. PMPs typically command 2-5x open-market CPMs.</li>
+      </ul>
+      <p>The processor's advantage: its transaction data makes retailer inventory more valuable in programmatic auctions. A grocery ad placement with a purchase-based audience overlay ("shoppers who bought organic produce 3+ times in the last month") commands significantly higher CPMs than the same placement with demographic-only targeting. The data enrichment is the value-add that justifies the platform fee.</p>
     </div>
   </div>
 </section>
@@ -597,6 +607,15 @@ li strong { color: var(--text-primary); }
       <li><strong>Differential privacy:</strong> Noise is added to all aggregate outputs. Practical epsilon values for advertising use cases range from 1-10; at epsilon &lt; 1, fine-grained segments (lifecycle signals, location patterns) become too noisy for reliable targeting. This creates a fundamental tension between privacy guarantees and segment utility that must be managed per-segment.</li>
       <li><strong>k-anonymity:</strong> Every released record is indistinguishable from at least k-1 others. Minimum k=1,000 for audience segments; k=500 for attribution reports (higher granularity, lower privacy risk because only aggregate match counts are released).</li>
       <li><strong>Temporal bucketing:</strong> Individual transaction timestamps are aggregated into weekly windows to prevent timing-based re-identification.</li>
+    </ul>
+
+    <h3>International Regulatory Complexity</h3>
+    <p>The GDPR section above treats the EU as a single market, which is an oversimplification. Data protection authorities (DPAs) in different EU member states have developed divergent enforcement precedents that materially affect the processor's ability to operate across the bloc:</p>
+    <ul>
+      <li><strong>Germany (BfDI and state DPAs):</strong> Germany applies the strictest interpretation of GDPR consent requirements. The Hamburg DPA and the Bavarian LDA have both taken the position that consent for ad targeting must be granular per-purpose and cannot be bundled with payment processing consent. German regulators also apply stricter standards to data transfers within corporate groups, which could affect the processor's ability to centralize transaction data for audience building.</li>
+      <li><strong>France (CNIL):</strong> CNIL has issued multiple fines against ad tech companies (Criteo, 40M euros in 2023) for insufficient consent mechanisms. CNIL requires "clear and specific" consent separate from general terms of service, and has rejected "legitimate interest" as a legal basis for advertising in every case it has evaluated.</li>
+      <li><strong>Ireland (DPC):</strong> The Irish DPC supervises most US tech companies' EU operations (including Stripe's EU entity). While historically perceived as less aggressive, the DPC has faced pressure from other DPAs (via the EDPB consistency mechanism) to align with stricter interpretations. Any enforcement action through the DPC would affect the processor's entire EU operation, not just one country.</li>
+      <li><strong>Practical impact:</strong> The processor should expect to launch EU advertising products on a country-by-country basis, starting with markets that have clearer regulatory precedent (UK post-Brexit has a more business-friendly ICO, Netherlands has established clean room guidance). Germany and France should be last, after regulatory relationships are established and compliance architecture is tested in more permissive markets.</li>
     </ul>
 
     <h3>Privacy as Advantage (But Not Moat)</h3>
@@ -684,6 +703,43 @@ li strong { color: var(--text-primary); }
     <h3>Valuation Impact</h3>
     <p>At the base case ($1.2B Year 5 revenue, 68% gross margin), the advertising business line could be valued at $12-$18B using ad tech comparables (The Trade Desk at 15-20x revenue). For a company valued at $65-90B on payments, this represents a 15-25% valuation uplift. The bull case ($2.5B) yields $25-$40B in incremental value.</p>
     <p>Under the bear case ($400M), the business generates positive contribution margin and validates the data asset, but does not move the valuation needle materially. It would be comparable to Cardlytics at its pre-collapse peak, suggesting the market would value it at $2-4B as a standalone business.</p>
+
+    <h3>Cumulative Investment and Payback (Base Case)</h3>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Metric</th><th>Year 1</th><th>Year 2</th><th>Year 3</th><th>Year 4</th><th>Year 5</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Revenue</strong></td><td>$40M</td><td>$135M</td><td>$360M</td><td>$730M</td><td>$1,200M</td></tr>
+          <tr><td><strong>Gross Profit</strong></td><td>$32M</td><td>$105M</td><td>$266M</td><td>$511M</td><td>$816M</td></tr>
+          <tr><td><strong>Headcount Cost</strong></td><td>$27M</td><td>$73M</td><td>$154M</td><td>$243M</td><td>$324M</td></tr>
+          <tr><td><strong>Infra & Tooling</strong></td><td>$15M</td><td>$25M</td><td>$40M</td><td>$55M</td><td>$70M</td></tr>
+          <tr><td><strong>G&A / Other</strong></td><td>$8M</td><td>$15M</td><td>$25M</td><td>$35M</td><td>$45M</td></tr>
+          <tr style="background:var(--bg-card-alt);">
+            <td><strong>Operating Income</strong></td><td><strong>-$18M</strong></td><td><strong>-$8M</strong></td><td><strong>$47M</strong></td><td><strong>$178M</strong></td><td><strong>$377M</strong></td>
+          </tr>
+          <tr><td><strong>Cumulative Cash Position</strong></td><td>-$18M</td><td>-$26M</td><td>+$21M</td><td>+$199M</td><td>+$576M</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p><strong>Key finding:</strong> The base case reaches operating breakeven in mid-Year 3 and recovers the cumulative investment (~$26M peak cash burn) by end of Year 3. This is remarkably capital-efficient because the processor already has the merchant relationships, POS infrastructure, and transaction data pipeline. The primary investment is people (ad tech engineering, privacy, sales), not infrastructure. Headcount cost assumes fully loaded cost of $400K/year for engineering and $350K/year blended across other functions, consistent with Bay Area ad tech compensation.</p>
+    <p>In the bear case, the business reaches breakeven later (Year 4) with peak cumulative investment of roughly $50M. This is manageable for a company generating $1.5B+ in annual operating cash flow from core payments. The investment is not existential; the opportunity cost is the primary consideration.</p>
+
+    <h3>Layer 3 Unit Economics: Ad Network</h3>
+    <p>The ad network's viability depends on per-merchant economics:</p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Metric</th><th>SMB Merchant (avg)</th><th>Mid-Market Merchant</th><th>Notes</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Monthly ad spend</strong></td><td>$500-$2,000</td><td>$5,000-$25,000</td><td>Self-serve budgets. Enterprise excluded (agency-managed).</td></tr>
+          <tr><td><strong>Platform take (30%)</strong></td><td>$150-$600</td><td>$1,500-$7,500</td><td>70/30 merchant/platform split.</td></tr>
+          <tr><td><strong>Annual platform revenue/merchant</strong></td><td>$1,800-$7,200</td><td>$18,000-$90,000</td><td>Blended ARPU: $4,500/yr SMB, $50,000/yr mid-market.</td></tr>
+          <tr><td><strong>Customer acquisition cost</strong></td><td>$200-$500</td><td>$2,000-$5,000</td><td>SMB via dashboard integration. Mid-market via inside sales.</td></tr>
+          <tr><td><strong>LTV:CAC ratio</strong></td><td>5:1 to 12:1</td><td>5:1 to 18:1</td><td>Assumes 24-month retention. Healthy above 3:1.</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p>The critical CAC advantage: the processor already has a merchant dashboard with daily active usage. Adding an "advertise your business" tab costs near zero in acquisition. SMB CAC of $200-$500 is dramatically lower than a standalone ad network startup ($1,000-$3,000 SMB CAC via cold outreach). Product-led growth through the existing dashboard is the primary Layer 3 distribution strategy.</p>
+    <p><strong>Liquidity threshold:</strong> At $4,500 average annual revenue per merchant, the ad network needs roughly 25,000 active advertisers to reach $100M in platform revenue. At 5% conversion from the total merchant base (5M), that is 250,000 prospects, with 25,000 (10% of converted) actively running campaigns. Achievable by Year 4, not Year 2.</p>
   </div>
 </section>
 
@@ -752,8 +808,14 @@ li strong { color: var(--text-primary); }
     </div>
 
     <div class="callout amber">
-      <p><strong>The Culture Problem:</strong> Payment companies and ad tech companies have fundamentally different cultures, technical stacks, and customer relationships. The history of non-ad-tech companies entering advertising is littered with expensive failures: Oracle's BlueKai acquisition ($400M, 2014) was eventually shut down. Salesforce's Krux acquisition ($700M, 2016) was subsumed into a broader data platform that never became an independent ad business. AT&T's Xandr ($1.6B acquisition of AppNexus, 2018) was sold to Microsoft at a loss. The payment processor must establish the ads team as a culturally distinct unit with its own hiring practices, compensation structure (ad tech talent expects equity-heavy packages), and product development cadence. Attempting to run an ads business with payments-company DNA will produce the same results as every prior attempt.</p>
+      <p><strong>The Culture Problem:</strong> Payment companies and ad tech companies have fundamentally different cultures, technical stacks, and customer relationships. The history of non-ad-tech companies entering advertising is littered with expensive failures, and each failed for a specific reason worth understanding:</p>
     </div>
+    <ul>
+      <li><strong>Oracle/BlueKai ($400M, 2014):</strong> Oracle acquired BlueKai as the centerpiece of its data cloud strategy. The failure was structural: Oracle bet on third-party cookie-based data management, which IDFA deprecation and Chrome Privacy Sandbox rendered obsolete. Oracle shut down its advertising division entirely in 2024. Lesson: the data infrastructure must be privacy-durable, not dependent on identifiers that are being deprecated.</li>
+      <li><strong>Salesforce/Krux ($700M, 2016):</strong> Krux was absorbed into Salesforce's CDP (Customer Data Platform) and lost its identity as an independent advertising product. The failure was organizational subordination: Salesforce's enterprise sales motion optimized for CRM upsells, not ad tech revenue. Krux became a feature within Salesforce Marketing Cloud, not a standalone business. Lesson: the ad business must have its own P&L, its own leadership, and its own success metrics that are not subordinate to the core product.</li>
+      <li><strong>AT&T/Xandr ($1.6B, AppNexus acquisition 2018):</strong> AT&T bought AppNexus to combine its subscriber data with programmatic ad infrastructure. The failure was advertiser conflict: AT&T's sales teams were competing with the same agencies and brands that Xandr needed as DSP customers. AT&T sold Xandr to Microsoft at a significant loss in 2022. Lesson: the processor must avoid structural conflicts where its advertising clients are also its payments competitors.</li>
+    </ul>
+    <p><strong>What "semi-autonomous" must actually mean:</strong> Not a department with a different name. A separate P&L with its own revenue targets and investment budget. A distinct compensation structure (ad tech expects 40-60% equity-weighted comp vs. payments' 20-30%). A separate technical stack (ad tech runs on millisecond-latency bidding systems, not payments' batch processing). A dedicated office or floor (cultural osmosis from the payments org will kill ad tech velocity). And critically, a CEO-level sponsor who protects the unit from being absorbed into the core business or having its resources raided during a payments downturn. Without all five, the historical pattern will repeat.</p>
   </div>
 </section>
 
