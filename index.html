@@ -1,0 +1,1390 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Transaction Intelligence: A Payment Processor's Path to Ad Platform Dominance</title>
+<style>
+:root {
+  --bg-primary: #0a0e17;
+  --bg-secondary: #111827;
+  --bg-card: #1a2234;
+  --bg-card-alt: #1e293b;
+  --text-primary: #e2e8f0;
+  --text-secondary: #94a3b8;
+  --text-muted: #64748b;
+  --accent-blue: #3b82f6;
+  --accent-cyan: #06b6d4;
+  --accent-green: #10b981;
+  --accent-amber: #f59e0b;
+  --accent-red: #ef4444;
+  --accent-purple: #8b5cf6;
+  --border: #1e293b;
+  --border-accent: #334155;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Inter, Roboto, sans-serif;
+  line-height: 1.7;
+  font-size: 16px;
+}
+
+.container {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+
+/* Hero Section */
+.hero {
+  background: linear-gradient(135deg, #0a0e17 0%, #1a1040 40%, #0f172a 100%);
+  border-bottom: 1px solid var(--border);
+  padding: 5rem 0 4rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.hero::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  right: -20%;
+  width: 600px;
+  height: 600px;
+  background: radial-gradient(circle, rgba(59,130,246,0.08) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.hero-label {
+  display: inline-block;
+  background: rgba(59,130,246,0.15);
+  color: var(--accent-blue);
+  padding: 0.35rem 1rem;
+  border-radius: 2rem;
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  margin-bottom: 1.5rem;
+}
+
+.hero h1 {
+  font-size: 2.8rem;
+  font-weight: 800;
+  line-height: 1.15;
+  margin-bottom: 1.5rem;
+  background: linear-gradient(135deg, #e2e8f0 0%, #94a3b8 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.hero .subtitle {
+  font-size: 1.2rem;
+  color: var(--text-secondary);
+  max-width: 750px;
+  margin-bottom: 2rem;
+}
+
+.hero-meta {
+  display: flex;
+  gap: 2rem;
+  flex-wrap: wrap;
+  font-size: 0.85rem;
+  color: var(--text-muted);
+}
+
+.hero-meta span { display: flex; align-items: center; gap: 0.4rem; }
+
+/* Navigation */
+.toc {
+  background: var(--bg-secondary);
+  border-bottom: 1px solid var(--border);
+  padding: 1.5rem 0;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.toc-inner {
+  display: flex;
+  gap: 1.5rem;
+  overflow-x: auto;
+  padding-bottom: 0.25rem;
+  scrollbar-width: thin;
+}
+
+.toc a {
+  color: var(--text-muted);
+  text-decoration: none;
+  font-size: 0.8rem;
+  font-weight: 500;
+  white-space: nowrap;
+  padding: 0.3rem 0.6rem;
+  border-radius: 0.25rem;
+  transition: all 0.2s;
+}
+
+.toc a:hover { color: var(--text-primary); background: var(--bg-card); }
+
+/* Sections */
+section {
+  padding: 4rem 0;
+  border-bottom: 1px solid var(--border);
+}
+
+section:last-child { border-bottom: none; }
+
+h2 {
+  font-size: 1.8rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+  color: var(--text-primary);
+}
+
+h2 .section-num {
+  color: var(--accent-blue);
+  font-weight: 800;
+  margin-right: 0.5rem;
+}
+
+.section-desc {
+  color: var(--text-muted);
+  font-size: 0.9rem;
+  margin-bottom: 2rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid var(--border);
+}
+
+h3 {
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin: 2rem 0 1rem;
+  color: var(--text-primary);
+}
+
+h4 {
+  font-size: 1.05rem;
+  font-weight: 600;
+  margin: 1.5rem 0 0.75rem;
+  color: var(--accent-cyan);
+}
+
+p { margin-bottom: 1rem; color: var(--text-secondary); }
+
+/* Cards */
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.25rem;
+  margin: 1.5rem 0;
+}
+
+.card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 0.75rem;
+  padding: 1.5rem;
+}
+
+.card-header {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+}
+
+.card-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 0.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2rem;
+  flex-shrink: 0;
+}
+
+.card-icon.blue { background: rgba(59,130,246,0.15); }
+.card-icon.green { background: rgba(16,185,129,0.15); }
+.card-icon.amber { background: rgba(245,158,11,0.15); }
+.card-icon.purple { background: rgba(139,92,246,0.15); }
+.card-icon.cyan { background: rgba(6,182,212,0.15); }
+.card-icon.red { background: rgba(239,68,68,0.15); }
+
+.card h4 { margin: 0; color: var(--text-primary); font-size: 1rem; }
+.card p { font-size: 0.9rem; margin-bottom: 0; }
+
+/* Stat boxes */
+.stat-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+  margin: 1.5rem 0;
+}
+
+.stat-box {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 0.75rem;
+  padding: 1.25rem;
+  text-align: center;
+}
+
+.stat-box .value {
+  font-size: 1.8rem;
+  font-weight: 800;
+  color: var(--accent-blue);
+  margin-bottom: 0.25rem;
+}
+
+.stat-box .label {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.stat-box .source {
+  font-size: 0.7rem;
+  color: var(--text-muted);
+  margin-top: 0.35rem;
+  font-style: italic;
+}
+
+/* Tables */
+.table-wrap {
+  overflow-x: auto;
+  margin: 1.5rem 0;
+  border-radius: 0.75rem;
+  border: 1px solid var(--border);
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.9rem;
+}
+
+thead { background: var(--bg-card); }
+
+th {
+  padding: 0.75rem 1rem;
+  text-align: left;
+  font-weight: 600;
+  color: var(--text-primary);
+  border-bottom: 1px solid var(--border-accent);
+  white-space: nowrap;
+}
+
+td {
+  padding: 0.65rem 1rem;
+  color: var(--text-secondary);
+  border-bottom: 1px solid var(--border);
+}
+
+tr:last-child td { border-bottom: none; }
+tr:hover td { background: rgba(59,130,246,0.03); }
+
+/* Callout */
+.callout {
+  background: var(--bg-card);
+  border-left: 3px solid var(--accent-blue);
+  border-radius: 0 0.5rem 0.5rem 0;
+  padding: 1.25rem 1.5rem;
+  margin: 1.5rem 0;
+}
+
+.callout.green { border-left-color: var(--accent-green); }
+.callout.amber { border-left-color: var(--accent-amber); }
+.callout.red { border-left-color: var(--accent-red); }
+.callout.purple { border-left-color: var(--accent-purple); }
+
+.callout p { margin-bottom: 0; }
+.callout strong { color: var(--text-primary); }
+
+/* Lists */
+ul, ol { margin: 1rem 0 1rem 1.5rem; color: var(--text-secondary); }
+li { margin-bottom: 0.5rem; font-size: 0.95rem; }
+li strong { color: var(--text-primary); }
+
+/* Layer cards */
+.layer-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 0.75rem;
+  padding: 2rem;
+  margin: 1.5rem 0;
+  position: relative;
+}
+
+.layer-card::before {
+  content: attr(data-layer);
+  position: absolute;
+  top: -0.75rem;
+  left: 1.5rem;
+  background: var(--accent-blue);
+  color: white;
+  font-size: 0.7rem;
+  font-weight: 700;
+  padding: 0.2rem 0.75rem;
+  border-radius: 1rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.layer-card.l2::before { background: var(--accent-cyan); }
+.layer-card.l3::before { background: var(--accent-purple); }
+.layer-card.l4::before { background: var(--accent-green); }
+
+.layer-card h3 { margin-top: 0.5rem; }
+
+/* Timeline */
+.timeline {
+  position: relative;
+  margin: 2rem 0;
+  padding-left: 2rem;
+}
+
+.timeline::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: var(--border-accent);
+}
+
+.timeline-item {
+  position: relative;
+  margin-bottom: 2rem;
+  padding-left: 1.5rem;
+}
+
+.timeline-item::before {
+  content: '';
+  position: absolute;
+  left: -2.35rem;
+  top: 0.4rem;
+  width: 12px;
+  height: 12px;
+  background: var(--accent-blue);
+  border-radius: 50%;
+  border: 2px solid var(--bg-primary);
+}
+
+.timeline-item:nth-child(2)::before { background: var(--accent-cyan); }
+.timeline-item:nth-child(3)::before { background: var(--accent-purple); }
+.timeline-item:nth-child(4)::before { background: var(--accent-green); }
+
+.timeline-item .phase {
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--accent-blue);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 0.25rem;
+}
+
+.timeline-item:nth-child(2) .phase { color: var(--accent-cyan); }
+.timeline-item:nth-child(3) .phase { color: var(--accent-purple); }
+.timeline-item:nth-child(4) .phase { color: var(--accent-green); }
+
+/* Risk matrix */
+.risk-item {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1rem;
+  align-items: flex-start;
+}
+
+.risk-badge {
+  display: inline-block;
+  padding: 0.2rem 0.6rem;
+  border-radius: 0.25rem;
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  white-space: nowrap;
+  flex-shrink: 0;
+  margin-top: 0.2rem;
+}
+
+.risk-badge.high { background: rgba(239,68,68,0.15); color: var(--accent-red); }
+.risk-badge.medium { background: rgba(245,158,11,0.15); color: var(--accent-amber); }
+.risk-badge.low { background: rgba(16,185,129,0.15); color: var(--accent-green); }
+
+/* Footer */
+.footer {
+  padding: 3rem 0;
+  text-align: center;
+  color: var(--text-muted);
+  font-size: 0.8rem;
+}
+
+.footer .disclaimer {
+  max-width: 600px;
+  margin: 0 auto;
+  font-style: italic;
+}
+
+/* Bar chart */
+.bar-chart { margin: 1.5rem 0; }
+
+.bar-row {
+  display: flex;
+  align-items: center;
+  margin-bottom: 0.5rem;
+  gap: 0.75rem;
+}
+
+.bar-label {
+  width: 140px;
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+  text-align: right;
+  flex-shrink: 0;
+}
+
+.bar-track {
+  flex: 1;
+  height: 24px;
+  background: var(--bg-card);
+  border-radius: 4px;
+  overflow: hidden;
+  position: relative;
+}
+
+.bar-fill {
+  height: 100%;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  padding-left: 0.5rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: white;
+  transition: width 0.6s ease;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .hero h1 { font-size: 2rem; }
+  .container { padding: 0 1.25rem; }
+  section { padding: 3rem 0; }
+  .stat-row { grid-template-columns: 1fr 1fr; }
+  .card-grid { grid-template-columns: 1fr; }
+  .bar-label { width: 100px; }
+}
+
+@media (max-width: 480px) {
+  .hero h1 { font-size: 1.6rem; }
+  .stat-row { grid-template-columns: 1fr; }
+  .hero-meta { flex-direction: column; gap: 0.5rem; }
+}
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<header class="hero">
+  <div class="container">
+    <span class="hero-label">Strategic Analysis</span>
+    <h1>Transaction Intelligence:<br>A Payment Processor's Path to Ad Platform Dominance</h1>
+    <p class="subtitle">How a company like Stripe could leverage brick-and-mortar transaction data, partner with ads management vendors, and build a first-party advertising platform in a post-cookie world.</p>
+    <div class="hero-meta">
+      <span>July 2026</span>
+      <span>Confidential Strategy Brief</span>
+      <span>30 min read</span>
+    </div>
+  </div>
+</header>
+
+<!-- TOC -->
+<nav class="toc">
+  <div class="container">
+    <div class="toc-inner">
+      <a href="#exec-summary">Executive Summary</a>
+      <a href="#market">Market Context</a>
+      <a href="#landscape">Competitive Landscape</a>
+      <a href="#strategy">Strategy Layers</a>
+      <a href="#partnership">Partnership Model</a>
+      <a href="#privacy">Privacy & Regulatory</a>
+      <a href="#revenue">Revenue Model</a>
+      <a href="#roadmap">Roadmap</a>
+      <a href="#risks">Risks</a>
+    </div>
+  </div>
+</nav>
+
+<!-- EXECUTIVE SUMMARY -->
+<section id="exec-summary">
+  <div class="container">
+    <h2><span class="section-num">01</span>Executive Summary</h2>
+    <p class="section-desc">The core thesis in three paragraphs</p>
+
+    <div class="callout">
+      <p><strong>Core Thesis:</strong> Payment processors sit on the most valuable untapped data asset in advertising: deterministic, transaction-level purchase data spanning millions of merchants and billions of consumer interactions. In a market where digital ad spend has reached $972 billion and the $175+ billion retail media sector is growing at 12-14% annually, the company that closes the gap between ad impression and actual purchase will capture outsized value. A payment processor with brick-and-mortar transaction data is uniquely positioned to do exactly that.</p>
+    </div>
+
+    <p>The advertising industry's fundamental problem is attribution. Brands spend $740+ billion on digital ads annually but struggle to measure whether those ads drive real-world purchases. Third-party cookies, once the backbone of digital attribution, are deprecated or restricted. Mobile identifiers (IDFA, GAID) are increasingly opt-in. Walled gardens like Meta and Google offer modeled conversions, but advertisers want deterministic proof. A payment processor that captures point-of-sale transaction data across millions of merchants can provide exactly this: a closed-loop system that matches ad exposure to verified purchase, with no modeling required.</p>
+
+    <p>The strategy unfolds in four layers. First, offer attribution-as-a-service through privacy-safe clean rooms, proving return on ad spend with transaction-level certainty. Second, build purchase-based audience segments and license them into existing ad platforms through ads management vendors as the distribution channel. Third, launch a proprietary merchant-to-merchant ad network that operates entirely on first-party data, free from cookie dependencies or platform intermediaries. Fourth, become the infrastructure layer that enables mid-market retailers to build their own retail media networks, creating a platform play that scales with the market.</p>
+
+    <p>This is not speculative. Cardlytics built a $200M+ annual revenue business on a less powerful version of this model using bank transaction data. Shopify launched Shop Campaigns to monetize merchant data through targeted offers. Amazon's advertising business generates $56+ billion annually, largely because it owns the purchase funnel. A payment processor with $1.9 trillion in annual payment volume, 5 million merchant relationships, and growing physical-world presence through point-of-sale hardware has the raw materials to build something more comprehensive than any of these players, provided it moves decisively on privacy architecture, partnership development, and product execution.</p>
+  </div>
+</section>
+
+<!-- MARKET CONTEXT -->
+<section id="market">
+  <div class="container">
+    <h2><span class="section-num">02</span>Market Context</h2>
+    <p class="section-desc">The structural forces creating the opportunity window</p>
+
+    <div class="stat-row">
+      <div class="stat-box">
+        <div class="value">$1.3T</div>
+        <div class="label">Global Ad Spend 2026</div>
+        <div class="source">WARC Media, Dec 2025</div>
+      </div>
+      <div class="stat-box">
+        <div class="value">$972B</div>
+        <div class="label">Digital Ad Spend 2026</div>
+        <div class="source">ResearchAndMarkets, Feb 2026</div>
+      </div>
+      <div class="stat-box">
+        <div class="value">$197B</div>
+        <div class="label">Retail Media Spend 2026</div>
+        <div class="source">WARC, projected</div>
+      </div>
+      <div class="stat-box">
+        <div class="value">73%</div>
+        <div class="label">Digital Share of Total</div>
+        <div class="source">eMarketer, 2025</div>
+      </div>
+    </div>
+
+    <h3>The Attribution Gap</h3>
+    <p>Despite nearly a trillion dollars in annual digital ad spend, measuring the connection between an online ad impression and an offline purchase remains one of advertising's hardest problems. This "attribution gap" is the central market failure that creates the opportunity.</p>
+
+    <ul>
+      <li><strong>Multi-touch attribution models</strong> are fundamentally probabilistic, relying on click paths and cookie trails that capture only a fraction of the consumer journey.</li>
+      <li><strong>80% of retail transactions still happen in physical stores</strong> (U.S. Census Bureau), meaning the majority of actual purchase behavior is invisible to digital ad platforms.</li>
+      <li><strong>Google's modeled conversions</strong> estimate offline impact but cannot prove individual-level causation. Meta's Conversions API requires advertiser-side implementation and covers only participating merchants.</li>
+      <li><strong>Incrementality testing</strong> (geo-holdouts, randomized control trials) is expensive, slow, and impractical for most advertisers below enterprise scale.</li>
+    </ul>
+
+    <div class="callout green">
+      <p><strong>The Structural Tailwind:</strong> Payment processors do not need to model purchase behavior. They observe it directly. Every card tap, chip insert, and digital wallet transaction is a verified purchase event with merchant category, amount, timestamp, and location. This is the ground truth that the entire advertising ecosystem is trying to reconstruct through inference.</p>
+    </div>
+
+    <h3>Cookie Deprecation and the Privacy Shift</h3>
+    <p>The advertising industry's reliance on third-party tracking is collapsing under regulatory and technical pressure. Apple's App Tracking Transparency (ATT) reduced opted-in mobile tracking to roughly 25% of iOS users. Chrome's Privacy Sandbox is restructuring how audience targeting works on the open web. GDPR enforcement in Europe and a patchwork of U.S. state privacy laws (CCPA/CPRA, Virginia CDPA, Colorado CPA, Connecticut CTDPA, and a dozen others enacted through 2025) have made consent-based data collection the legal baseline.</p>
+
+    <p>This privacy shift is not a headwind for a payment processor's ad ambitions. It is the tailwind. First-party transaction data, collected through a direct merchant relationship with proper consent, is the most privacy-durable signal in the advertising ecosystem. It does not depend on browser state, device identifiers, or cross-site tracking. As every other targeting signal degrades, purchase data becomes relatively more valuable.</p>
+
+    <h3>The Retail Media Explosion</h3>
+    <p>Retail media has become the fastest-growing segment in advertising, projected to reach $197 billion globally in 2026 (WARC), overtaking television ad spend for the first time. The market is expected to exceed $200 billion by 2027.</p>
+
+    <div class="bar-chart">
+      <div class="bar-row">
+        <span class="bar-label">Amazon Ads</span>
+        <div class="bar-track">
+          <div class="bar-fill" style="width:75%;background:var(--accent-blue);">$56.2B</div>
+        </div>
+      </div>
+      <div class="bar-row">
+        <span class="bar-label">Walmart Connect</span>
+        <div class="bar-track">
+          <div class="bar-fill" style="width:16%;background:var(--accent-cyan);">$4.4B</div>
+        </div>
+      </div>
+      <div class="bar-row">
+        <span class="bar-label">Instacart Ads</span>
+        <div class="bar-track">
+          <div class="bar-fill" style="width:12%;background:var(--accent-green);">$1.5B+</div>
+        </div>
+      </div>
+      <div class="bar-row">
+        <span class="bar-label">Roundel (Target)</span>
+        <div class="bar-track">
+          <div class="bar-fill" style="width:10%;background:var(--accent-amber);">$1.2B+</div>
+        </div>
+      </div>
+      <div class="bar-row">
+        <span class="bar-label">Best Buy Ads</span>
+        <div class="bar-track">
+          <div class="bar-fill" style="width:5%;background:var(--accent-purple);">$500M+</div>
+        </div>
+      </div>
+    </div>
+
+    <p>The critical pattern: every major retailer is building an ad business. Amazon, Walmart, Target, Kroger, Best Buy, Albertsons, DoorDash, Uber, and Instacart all operate retail media networks generating $1B+ annually. The economic logic is compelling: advertising margins (60-80%) dramatically exceed retail margins (2-5%). But mid-market and smaller retailers lack the technology, data infrastructure, and sales teams to build their own. This is the infrastructure gap that a payment processor can fill.</p>
+  </div>
+</section>
+
+<!-- COMPETITIVE LANDSCAPE -->
+<section id="landscape">
+  <div class="container">
+    <h2><span class="section-num">03</span>Competitive Landscape</h2>
+    <p class="section-desc">Who is already playing in transaction-powered advertising, and where the gaps remain</p>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Player</th>
+            <th>Data Asset</th>
+            <th>Revenue / Scale</th>
+            <th>Strengths</th>
+            <th>Vulnerabilities</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Cardlytics</strong></td>
+            <td>Bank card transaction data via FI partnerships</td>
+            <td>$58M billings Q1 2026; ~$200M annual run rate. Market cap ~$39M (NASDAQ: CDLX)</td>
+            <td>Visibility into ~50% of U.S. card transactions. Deterministic attribution. Direct bank channel for offer delivery.</td>
+            <td>Collapsing market cap. Lost Bank of America as partner. Revenue declined 39% YoY Q1 2026. No direct merchant relationship. Data is aggregated, not merchant-level.</td>
+          </tr>
+          <tr>
+            <td><strong>LiveRamp</strong></td>
+            <td>Identity resolution graph, data clean rooms</td>
+            <td>$615M revenue FY2025. Market cap ~$3B.</td>
+            <td>Industry-standard identity spine. Clean room infrastructure. Integrations with all major platforms.</td>
+            <td>Does not own purchase data. Purely infrastructure layer. Dependent on partners for signal quality. Limited brick-and-mortar footprint.</td>
+          </tr>
+          <tr>
+            <td><strong>Epsilon (Publicis)</strong></td>
+            <td>250M+ consumer profiles, transaction data from retail and CPG partners</td>
+            <td>Part of Publicis Groupe ($15.5B revenue). Acquired for $4.4B in 2019.</td>
+            <td>Deep identity graph. Strong in CPG/retail verticals. End-to-end from data to media activation.</td>
+            <td>Owned by holding company with potential conflicts. Data freshness varies. Complex enterprise sales cycle.</td>
+          </tr>
+          <tr>
+            <td><strong>Shopify</strong></td>
+            <td>Merchant transaction data across 4.6M+ stores</td>
+            <td>$150B market cap. Shop Campaigns launched 2023.</td>
+            <td>Direct merchant relationships. Shop Pay checkout data. Shopify Audiences for platform targeting.</td>
+            <td>Primarily e-commerce, minimal brick-and-mortar signal. Shop Campaigns still small scale. Merchant opt-in creates coverage gaps.</td>
+          </tr>
+          <tr>
+            <td><strong>Block / Square</strong></td>
+            <td>Square POS transaction data from SMB merchants</td>
+            <td>$38B market cap. Has not launched formal ad product.</td>
+            <td>Strong SMB POS footprint. Cash App consumer identity. Owns both sides of the transaction.</td>
+            <td>SMB skew limits enterprise advertiser appeal. No ad sales infrastructure. Afterpay acquisition consumed focus.</td>
+          </tr>
+          <tr>
+            <td><strong>Amazon Ads</strong></td>
+            <td>First-party purchase data + browsing behavior on Amazon.com</td>
+            <td>$56.2B ad revenue 2025 (est). Growing 15%+ YoY.</td>
+            <td>Closed-loop attribution within Amazon. Full-funnel offering. Massive DSP with off-Amazon reach.</td>
+            <td>Data confined to Amazon ecosystem. No visibility into offline retail. Competing with merchants on its own platform.</td>
+          </tr>
+          <tr>
+            <td><strong>Retail Media Networks</strong><br>(Walmart, Target, Kroger, Best Buy)</td>
+            <td>First-party shopper data from loyalty programs and e-commerce</td>
+            <td>Combined $10B+ annually and growing fast.</td>
+            <td>Deep category-specific purchase data. In-store and online touchpoints. High-intent shopper audiences.</td>
+            <td>Fragmented. Each operates its own walled garden. Limited off-site capabilities. Measurement standards vary. Advertisers must manage multiple platforms.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="callout purple">
+      <p><strong>The White Space:</strong> No single player combines (a) direct merchant-level transaction data, (b) cross-merchant visibility spanning multiple retail categories, (c) a physical POS hardware footprint, and (d) an existing infrastructure relationship with 5M+ businesses. A payment processor occupies this exact position. Cardlytics has the data but not the merchant relationships. Shopify has the merchants but not the offline signal. Amazon has the closed loop but only within its own ecosystem. The payment processor advantage is structural: it sits beneath all of these, touching every transaction regardless of platform.</p>
+    </div>
+  </div>
+</section>
+
+<!-- STRATEGY LAYERS -->
+<section id="strategy">
+  <div class="container">
+    <h2><span class="section-num">04</span>Strategy Layers</h2>
+    <p class="section-desc">A phased approach from attribution to full ad platform</p>
+
+    <div class="layer-card" data-layer="Layer 1 -- Foundation">
+      <h3>Attribution-as-a-Service</h3>
+      <p><strong>What it is:</strong> A privacy-safe clean room service where merchants opt in to match hashed transaction data against ad platform audience identifiers. An advertiser runs a campaign on Facebook or Google, and the payment processor tells them exactly how many people who saw the ad subsequently made a verified purchase at a participating merchant. Deterministic ROAS measurement, not modeled estimates.</p>
+
+      <h4>How It Works</h4>
+      <ol>
+        <li><strong>Merchant opt-in:</strong> Merchants on the payment processor's POS and payment platform consent to have their anonymized, aggregated transaction data used for attribution. This consent is embedded in updated terms of service with clear disclosure.</li>
+        <li><strong>Clean room matching:</strong> The payment processor operates a data clean room (built in-house or partnered with Snowflake, AWS Clean Rooms, or Habu). Hashed transaction records are matched against hashed ad exposure logs from Facebook, Google, or other platforms. Neither party sees the other's raw data.</li>
+        <li><strong>Attribution report:</strong> The output is a deterministic match rate: X% of people exposed to Campaign A made a purchase at Merchant B within Y days, spending Z average dollars. No PII is exchanged. No individual-level data leaves the clean room.</li>
+        <li><strong>Feedback loop:</strong> Attribution results are delivered to advertisers and their agency/SaaS ad management partners, who use the signal to optimize future campaigns.</li>
+      </ol>
+
+      <h4>Why It Matters</h4>
+      <p>This layer is the lowest-risk entry point. It requires no changes to how advertisers buy media. It does not compete with Facebook, Google, or Amazon. It makes their platforms more valuable by proving that ad spend drives real purchases. The payment processor positions itself as a neutral measurement layer, which is the strategic foothold for everything that follows.</p>
+
+      <div class="callout">
+        <p><strong>Precedent:</strong> Cardlytics built a $200M+ annual billings business on a weaker version of this model. Its data comes from bank partners (one step removed from the merchant), covers card transactions but not cash or digital wallets, and is delivered through bank app channels with limited reach. A payment processor's data is more granular (merchant-level, not just category-level), more timely (near-real-time vs. batch), and comes with a direct merchant relationship that enables richer attribution reporting.</p>
+      </div>
+    </div>
+
+    <div class="layer-card l2" data-layer="Layer 2 -- Expansion">
+      <h3>Purchase-Based Audiences</h3>
+      <p><strong>What it is:</strong> The payment processor builds targetable audience segments derived from real transaction data and licenses them into existing ad platforms. Example segments: "Bought running shoes at brick-and-mortar retail in the last 30 days," "Average restaurant spend $150+ weekly," "Frequent home improvement purchaser, $5K+ in last 90 days." These segments are activated through Facebook Custom Audiences, Google Customer Match, Amazon DSP, or retail media network APIs.</p>
+
+      <h4>Distribution Through Ads Management Vendors</h4>
+      <p>The critical insight is distribution. Tens of thousands of agencies, SaaS ad platforms, and ads management service vendors already spend client budgets on Facebook, Google, Amazon, Best Buy, Target, and other platforms. These vendors are the natural channel for purchase-based audiences because:</p>
+      <ul>
+        <li>They already have the advertiser relationships and media buying workflows</li>
+        <li>Better targeting data directly improves their performance metrics and client retention</li>
+        <li>Purchase-based segments offer a differentiated product they cannot access elsewhere</li>
+        <li>Integration is lightweight: audience segments are pushed through existing platform APIs</li>
+      </ul>
+
+      <h4>Segment Architecture</h4>
+      <div class="card-grid">
+        <div class="card">
+          <div class="card-header">
+            <div class="card-icon blue">&#128717;</div>
+            <h4>Category Buyers</h4>
+          </div>
+          <p>Segments based on merchant category codes (MCC): dining, electronics, fitness, home improvement, luxury goods, grocery, automotive, travel. Each with recency and frequency modifiers.</p>
+        </div>
+        <div class="card">
+          <div class="card-header">
+            <div class="card-icon green">&#128200;</div>
+            <h4>Spend-Tier Cohorts</h4>
+          </div>
+          <p>Income-proxy segments based on aggregate spending patterns. High-value consumer cohorts ("premium dining 3x/week"), budget-conscious segments ("discount grocery primary"), category-specific spenders.</p>
+        </div>
+        <div class="card">
+          <div class="card-header">
+            <div class="card-icon amber">&#128205;</div>
+            <h4>Location Patterns</h4>
+          </div>
+          <p>Transaction-derived geographic segments: commuter patterns (work/home zip inference), travel behavior (hotel and airline spend), neighborhood affinity (shops frequently in SoHo vs. Brooklyn).</p>
+        </div>
+        <div class="card">
+          <div class="card-header">
+            <div class="card-icon purple">&#128260;</div>
+            <h4>Lifecycle Signals</h4>
+          </div>
+          <p>Life-event detection from transaction patterns: new parent (baby store purchases), new mover (furniture + home services spike), new pet owner, recent retiree (travel + leisure shift).</p>
+        </div>
+      </div>
+
+      <p>All segments are built at cohort level (minimum 1,000 users per segment) and delivered as hashed audience lists through platform APIs. No individual transaction histories are shared. The payment processor controls segment definitions, refresh cadence, and pricing.</p>
+    </div>
+
+    <div class="layer-card l3" data-layer="Layer 3 -- Differentiation">
+      <h3>Proprietary Ad Network</h3>
+      <p><strong>What it is:</strong> A self-serve advertising platform where merchants on the payment processor can target customers of other merchants within the ecosystem. Merchant A (a coffee shop) targets people who shop at the gym next door. A new restaurant targets people who dine frequently in its neighborhood. A DTC brand targets people who buy from its competitors at brick-and-mortar retail.</p>
+
+      <h4>Key Properties</h4>
+      <ul>
+        <li><strong>First-party data only.</strong> Every targeting signal comes from consented transaction data within the payment processor's merchant network. No cookies, no third-party data, no platform dependency.</li>
+        <li><strong>Cross-merchant targeting.</strong> The unique value that no other ad platform can offer: targeting based on verified purchase behavior at other businesses. Facebook and Google know what people click on. The payment processor knows what they actually buy.</li>
+        <li><strong>Closed-loop measurement.</strong> Because the payment processor processes the transactions on both sides (the ad-exposed consumer and the merchant running the campaign), attribution is automatic and deterministic. Every campaign has a verified ROAS.</li>
+        <li><strong>Self-serve interface.</strong> Built into the existing merchant dashboard. A coffee shop owner can set up a campaign in 5 minutes: choose an audience ("people who bought coffee within 1 mile in the last 7 days"), set a budget, create an offer, and launch. Performance reporting is real-time and automatic.</li>
+      </ul>
+
+      <h4>Ad Surfaces</h4>
+      <div class="card-grid">
+        <div class="card">
+          <div class="card-header">
+            <div class="card-icon cyan">&#128233;</div>
+            <h4>Receipt & Notification</h4>
+          </div>
+          <p>Post-purchase moments: digital receipts, payment confirmation screens, and merchant-branded notifications. High-intent surfaces with 60%+ open rates, delivering targeted offers seconds after a related purchase.</p>
+        </div>
+        <div class="card">
+          <div class="card-header">
+            <div class="card-icon blue">&#127760;</div>
+            <h4>Off-Network Delivery</h4>
+          </div>
+          <p>Targeted audiences exported to programmatic display, social, email, and CTV channels. The payment processor defines the audience; partner ad networks deliver the impression.</p>
+        </div>
+        <div class="card">
+          <div class="card-header">
+            <div class="card-icon green">&#128241;</div>
+            <h4>Consumer App</h4>
+          </div>
+          <p>If the processor operates a consumer-facing app (like Cash App or Shop), in-app offer placement becomes a high-value ad surface with direct purchase attribution.</p>
+        </div>
+      </div>
+
+      <div class="callout amber">
+        <p><strong>Precedent:</strong> Shopify launched Shop Campaigns in 2023, enabling merchants to pay for customer acquisition through the Shop app. The concept works but is constrained by Shopify's e-commerce-only footprint and limited consumer app adoption (~100M installs). A payment processor with POS hardware in physical stores has access to a much larger and more diverse transaction graph.</p>
+      </div>
+    </div>
+
+    <div class="layer-card l4" data-layer="Layer 4 -- Platform Play">
+      <h3>Retail Media Infrastructure</h3>
+      <p><strong>What it is:</strong> A white-label platform that enables mid-market and enterprise retailers to launch, operate, and scale their own retail media networks using the payment processor's data infrastructure, ad serving technology, and measurement capabilities. The payment processor becomes the Shopify of retail media: the infrastructure layer that makes it possible for any retailer to become an ad platform.</p>
+
+      <h4>Why This Matters</h4>
+      <p>The retail media market is projected to exceed $200 billion by 2027. But only a handful of retailers (Amazon, Walmart, Target, Kroger) have the engineering talent, data infrastructure, and sales organizations to build media networks independently. Thousands of mid-market retailers with valuable first-party shopper data have no viable path to monetize it through advertising.</p>
+
+      <p>The infrastructure gap is massive:</p>
+      <ul>
+        <li><strong>Building a retail media network from scratch costs $10M-$50M+</strong> in technology, data engineering, ad operations, and sales team buildout</li>
+        <li><strong>Time to market is 18-24 months</strong> for even well-resourced retailers</li>
+        <li><strong>Ongoing maintenance</strong> requires specialized ad tech talent that most retailers cannot recruit or retain</li>
+        <li><strong>Advertiser demand</strong> is consolidating toward fewer, larger networks, making it harder for new entrants to attract budgets</li>
+      </ul>
+
+      <h4>The Platform Offering</h4>
+      <div class="card-grid">
+        <div class="card">
+          <div class="card-header">
+            <div class="card-icon blue">&#9881;</div>
+            <h4>Ad Server & DSP</h4>
+          </div>
+          <p>White-label ad serving infrastructure: sponsored product listings, display ads, video placements, and in-store digital signage. Self-serve advertiser portal branded to the retailer.</p>
+        </div>
+        <div class="card">
+          <div class="card-header">
+            <div class="card-icon green">&#128202;</div>
+            <h4>Measurement Suite</h4>
+          </div>
+          <p>Closed-loop attribution powered by the payment processor's transaction data. Campaign performance tied to actual sales lift, not proxy metrics. Real-time reporting dashboard.</p>
+        </div>
+        <div class="card">
+          <div class="card-header">
+            <div class="card-icon amber">&#128101;</div>
+            <h4>Audience Builder</h4>
+          </div>
+          <p>Retailer's own first-party data (loyalty, e-commerce, POS) combined with the payment processor's cross-merchant signals to create enriched audience segments for advertiser targeting.</p>
+        </div>
+        <div class="card">
+          <div class="card-header">
+            <div class="card-icon purple">&#128176;</div>
+            <h4>Sales Enablement</h4>
+          </div>
+          <p>Programmatic demand integration (The Trade Desk, DV360, Amazon DSP) plus managed service support. Retailers sell inventory; the platform handles fulfillment.</p>
+        </div>
+      </div>
+
+      <p>The platform play creates a flywheel: more retailers on the platform means more transaction data, which improves audience quality and attribution accuracy, which attracts more advertisers, which generates more revenue for retailers, which attracts more retailers. The payment processor takes a platform fee (15-25% of ad revenue) while accumulating the most comprehensive cross-retailer transaction dataset in the market.</p>
+    </div>
+  </div>
+</section>
+
+<!-- PARTNERSHIP MODEL -->
+<section id="partnership">
+  <div class="container">
+    <h2><span class="section-num">05</span>The Ads Management Vendor Partnership Model</h2>
+    <p class="section-desc">How agencies and SaaS ad platforms become the distribution channel</p>
+
+    <p>The payment processor does not need to build a direct sales force to reach every advertiser. Tens of thousands of ads management vendors already run campaigns on Facebook, Google, Amazon, and retail media networks on behalf of brands. These vendors are the natural distribution channel for transaction-powered advertising products.</p>
+
+    <h3>Vendor Ecosystem Map</h3>
+    <div class="card-grid">
+      <div class="card">
+        <div class="card-header">
+          <div class="card-icon blue">&#127970;</div>
+          <h4>Large Holding Companies</h4>
+        </div>
+        <p>WPP, Publicis, Omnicom, IPG, Dentsu, Havas. Manage $100B+ in annual media spend. Need differentiated data products for client retention. Integration happens at the holding-company level, cascading to hundreds of subsidiary agencies.</p>
+      </div>
+      <div class="card">
+        <div class="card-header">
+          <div class="card-icon green">&#127919;</div>
+          <h4>Independent Agencies</h4>
+        </div>
+        <p>Thousands of boutique and mid-size agencies managing $1M-$100M in annual spend. Compete on performance and innovation. Purchase-based audiences offer an immediate, tangible edge over agencies without access.</p>
+      </div>
+      <div class="card">
+        <div class="card-header">
+          <div class="card-icon cyan">&#128187;</div>
+          <h4>SaaS Ad Platforms</h4>
+        </div>
+        <p>Marin Software, Kenshoo/Skai, Smartly.io, AdRoll, Criteo, Pacvue, Perpetua. Software platforms that automate campaign management across channels. API-first integration with audience segments and attribution data.</p>
+      </div>
+      <div class="card">
+        <div class="card-header">
+          <div class="card-icon amber">&#128722;</div>
+          <h4>Retail Media Specialists</h4>
+        </div>
+        <p>Pacvue, Skai, CommerceIQ, Perpetua, Flywheel Digital. Manage retail media campaigns on Amazon, Walmart, Target, Instacart. Natural partners for the retail media infrastructure play (Layer 4).</p>
+      </div>
+    </div>
+
+    <h3>Partnership Economics</h3>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Product</th>
+            <th>Vendor Benefit</th>
+            <th>Revenue Model</th>
+            <th>Integration Effort</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Attribution Reports</strong></td>
+            <td>Proven offline ROAS justifies higher client budgets</td>
+            <td>Per-campaign fee ($500-$5K) or % of attributed spend</td>
+            <td>Low: API integration, ~2 weeks</td>
+          </tr>
+          <tr>
+            <td><strong>Audience Segments</strong></td>
+            <td>Superior targeting improves campaign CPA by 20-40%</td>
+            <td>CPM premium ($2-8 per 1,000 users) or monthly license</td>
+            <td>Medium: Platform API setup, ~4 weeks</td>
+          </tr>
+          <tr>
+            <td><strong>Ad Network Inventory</strong></td>
+            <td>New, exclusive inventory with deterministic measurement</td>
+            <td>Revenue share (70/30 merchant/platform)</td>
+            <td>Medium: Campaign management UI, ~6 weeks</td>
+          </tr>
+          <tr>
+            <td><strong>Retail Media Platform</strong></td>
+            <td>New revenue stream managing retailer ad businesses</td>
+            <td>Platform fee (15-25% of retailer ad revenue)</td>
+            <td>High: Full integration, ~3-6 months</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="callout">
+      <p><strong>Key Principle:</strong> The payment processor should avoid building a large direct sales force in the early phases. Vendor partnerships provide immediate distribution to thousands of advertisers without the cost and complexity of enterprise sales. The direct sales team should focus exclusively on the top 100 enterprise advertisers and the top 50 retail media infrastructure clients. Everything else scales through the vendor channel.</p>
+    </div>
+  </div>
+</section>
+
+<!-- PRIVACY & REGULATORY -->
+<section id="privacy">
+  <div class="container">
+    <h2><span class="section-num">06</span>Privacy & Regulatory Analysis</h2>
+    <p class="section-desc">Why privacy-first positioning is the competitive moat, not a constraint</p>
+
+    <h3>PCI DSS Constraints</h3>
+    <p>Payment Card Industry Data Security Standards (PCI DSS) impose strict requirements on cardholder data, including primary account numbers (PANs), cardholder names, and card expiration dates. The advertising use case must operate entirely outside PCI scope. This is achievable because:</p>
+    <ul>
+      <li><strong>Transaction metadata is not cardholder data.</strong> Merchant category codes, transaction amounts, timestamps, and merchant IDs are not subject to PCI DSS when separated from the PAN and cardholder identity.</li>
+      <li><strong>Hashing and tokenization</strong> create a one-way transformation that removes PII from the analytical dataset. The clean room operates on hashed identifiers that cannot be reversed to reveal card numbers or consumer identities.</li>
+      <li><strong>Aggregation thresholds</strong> (minimum cohort sizes of 1,000 users) ensure that no individual's transaction history can be inferred from audience segments.</li>
+    </ul>
+
+    <h3>State Privacy Law Compliance</h3>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Regulation</th>
+            <th>Scope</th>
+            <th>Key Requirement</th>
+            <th>Compliance Approach</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>CCPA / CPRA</strong></td>
+            <td>California consumers</td>
+            <td>Right to opt out of "sale" or "sharing" of personal information for targeted advertising</td>
+            <td>Transaction data is used under "service provider" relationship with merchants. Consumer opt-out honored via universal privacy signal.</td>
+          </tr>
+          <tr>
+            <td><strong>GDPR</strong></td>
+            <td>EU/EEA data subjects</td>
+            <td>Lawful basis required. Consent or legitimate interest for profiling.</td>
+            <td>Legitimate interest assessment for aggregated analytics. Consent-based for individual-level matching. DPIA required.</td>
+          </tr>
+          <tr>
+            <td><strong>VCDPA / CPA / CTDPA</strong></td>
+            <td>VA, CO, CT consumers</td>
+            <td>Opt-out of targeted advertising and profiling</td>
+            <td>Universal opt-out mechanism. Data minimization by design. Annual privacy assessments.</td>
+          </tr>
+          <tr>
+            <td><strong>FTC Act Sec. 5</strong></td>
+            <td>All U.S. consumers</td>
+            <td>Prohibition on unfair or deceptive practices</td>
+            <td>Transparent merchant agreements. Consumer-facing privacy disclosures. No "dark patterns" in consent flows.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>Clean Room Architecture</h3>
+    <p>The technical architecture that makes this privacy-compliant at scale:</p>
+
+    <div class="callout green">
+      <p><strong>Data Flow:</strong> Merchant POS/Payment Data -> Tokenization Engine (PAN stripped, hashed consumer ID created) -> Aggregation Layer (min cohort 1,000) -> Clean Room (match against ad platform hashed IDs) -> Attribution Report / Audience Segment (no PII, no raw transactions, no individual histories)</p>
+    </div>
+
+    <ul>
+      <li><strong>Differential privacy noise</strong> is added to all outputs to prevent reconstruction of individual records from aggregate statistics.</li>
+      <li><strong>k-anonymity guarantees</strong> ensure every record in a released dataset is indistinguishable from at least k-1 other records.</li>
+      <li><strong>Temporal bucketing</strong> prevents precise timing of individual transactions. Data is aggregated into weekly or bi-weekly windows.</li>
+      <li><strong>Merchant consent management</strong> provides granular controls: merchants can opt in to attribution only, audiences only, or the full platform. Consent is revocable at any time with immediate effect.</li>
+    </ul>
+
+    <h3>Why Privacy is the Moat</h3>
+    <p>Banks move slowly on privacy innovation. Cardlytics has spent years navigating regulatory relationships with financial institutions. Ad tech companies like The Trade Desk, Criteo, and LiveRamp built their businesses on third-party data that is now under existential regulatory threat. A payment processor that builds a privacy-first architecture from day one has three structural advantages:</p>
+    <ol>
+      <li><strong>Regulatory durability.</strong> As privacy laws tighten (and they will), first-party transaction data with proper consent becomes more valuable relative to every other targeting signal.</li>
+      <li><strong>Merchant trust.</strong> Merchants are willing to share data with a payment processor they already trust with their financial operations. They are far less willing to share data with ad tech intermediaries they do not know.</li>
+      <li><strong>Clean room economics.</strong> Building privacy infrastructure is expensive and technically difficult. Once built, it creates a barrier to entry that prevents fast-followers from replicating the product without similar investment.</li>
+    </ol>
+  </div>
+</section>
+
+<!-- REVENUE MODEL -->
+<section id="revenue">
+  <div class="container">
+    <h2><span class="section-num">07</span>Revenue Model</h2>
+    <p class="section-desc">Pricing framework, TAM/SAM/SOM estimates, and 5-year financial projections</p>
+
+    <h3>Pricing Architecture</h3>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Product</th>
+            <th>Pricing Model</th>
+            <th>Indicative Pricing</th>
+            <th>Margin Profile</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Attribution-as-a-Service</strong></td>
+            <td>Per-campaign fee + % of measured spend</td>
+            <td>$1,000-$10,000 per study + 1-3% of attributed ad spend</td>
+            <td>75-85% gross margin</td>
+          </tr>
+          <tr>
+            <td><strong>Audience Segments</strong></td>
+            <td>CPM (cost per thousand users) or flat license</td>
+            <td>$3-10 CPM for standard segments; $15-30 CPM for premium/custom</td>
+            <td>80-90% gross margin</td>
+          </tr>
+          <tr>
+            <td><strong>Ad Network (merchant campaigns)</strong></td>
+            <td>CPC or CPM with revenue share</td>
+            <td>$0.50-3.00 CPC; 70/30 merchant/platform split</td>
+            <td>50-65% gross margin</td>
+          </tr>
+          <tr>
+            <td><strong>Retail Media Infrastructure</strong></td>
+            <td>Platform fee (% of retailer ad revenue) + setup</td>
+            <td>15-25% of ad revenue generated; $50K-$250K setup fee</td>
+            <td>60-70% gross margin</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>Market Sizing</h3>
+    <div class="stat-row">
+      <div class="stat-box">
+        <div class="value">$142B</div>
+        <div class="label">TAM</div>
+        <div class="source">Total addressable market</div>
+      </div>
+      <div class="stat-box">
+        <div class="value">$28B</div>
+        <div class="label">SAM</div>
+        <div class="source">Serviceable addressable market</div>
+      </div>
+      <div class="stat-box">
+        <div class="value">$3.2B</div>
+        <div class="label">SOM (Year 5)</div>
+        <div class="source">Realistic capture at scale</div>
+      </div>
+    </div>
+
+    <h4>TAM Derivation ($142B)</h4>
+    <ul>
+      <li><strong>Attribution market:</strong> $12B. 1.5% of $740B+ digital ad spend allocated to offline attribution and measurement solutions. Growing 20%+ annually as brands demand incrementality proof.</li>
+      <li><strong>Audience data market:</strong> $30B. Purchase-based audiences are a segment of the broader $30B data marketplace (identity, location, behavioral, purchase). Transaction-derived segments command 2-3x premium over modeled alternatives.</li>
+      <li><strong>Retail media (platform infrastructure):</strong> $40B. 20% of the $197B retail media market flows through third-party platforms and infrastructure providers. This share grows as mid-market retailers enter.</li>
+      <li><strong>Performance advertising (ad network):</strong> $60B. The portion of SMB and mid-market digital ad spend ($200B+) addressable through a self-serve, transaction-targeted merchant ad network.</li>
+    </ul>
+
+    <h4>SAM Derivation ($28B)</h4>
+    <p>The serviceable addressable market narrows based on geographic availability (U.S. and Western Europe initially), merchant coverage (existing POS and payment merchant base), and product maturity (not all layers launch simultaneously).</p>
+    <ul>
+      <li>Attribution: $4B (top-tier advertisers in covered markets)</li>
+      <li>Audiences: $6B (segments derived from existing merchant transaction data)</li>
+      <li>Retail media infrastructure: $8B (mid-market retailers without existing media networks)</li>
+      <li>Ad network: $10B (self-serve campaigns from existing merchant base)</li>
+    </ul>
+
+    <h4>SOM Derivation ($3.2B at Year 5)</h4>
+    <p>Assumes 8-15% penetration of SAM by Year 5, with attribution and audiences ramping fastest (established buyer demand) and ad network/retail media infrastructure following as product matures.</p>
+
+    <h3>Five-Year Revenue Projection</h3>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Revenue Line</th>
+            <th>Year 1</th>
+            <th>Year 2</th>
+            <th>Year 3</th>
+            <th>Year 4</th>
+            <th>Year 5</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Attribution-as-a-Service</strong></td>
+            <td>$45M</td>
+            <td>$120M</td>
+            <td>$280M</td>
+            <td>$450M</td>
+            <td>$650M</td>
+          </tr>
+          <tr>
+            <td><strong>Audience Segments</strong></td>
+            <td>$15M</td>
+            <td>$80M</td>
+            <td>$220M</td>
+            <td>$450M</td>
+            <td>$750M</td>
+          </tr>
+          <tr>
+            <td><strong>Ad Network</strong></td>
+            <td>--</td>
+            <td>$25M</td>
+            <td>$150M</td>
+            <td>$450M</td>
+            <td>$1,000M</td>
+          </tr>
+          <tr>
+            <td><strong>Retail Media Platform</strong></td>
+            <td>--</td>
+            <td>--</td>
+            <td>$50M</td>
+            <td>$300M</td>
+            <td>$800M</td>
+          </tr>
+          <tr style="background:var(--bg-card-alt);">
+            <td><strong>Total Revenue</strong></td>
+            <td><strong>$60M</strong></td>
+            <td><strong>$225M</strong></td>
+            <td><strong>$700M</strong></td>
+            <td><strong>$1,650M</strong></td>
+            <td><strong>$3,200M</strong></td>
+          </tr>
+          <tr>
+            <td><strong>Blended Gross Margin</strong></td>
+            <td>80%</td>
+            <td>78%</td>
+            <td>72%</td>
+            <td>68%</td>
+            <td>65%</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="callout">
+      <p><strong>Valuation Implication:</strong> At $3.2B in Year 5 revenue with 65% gross margins and a SaaS/platform revenue profile, this business line alone could be valued at $25B-$40B using comparable multiples from ad tech (The Trade Desk at 20x revenue) and data infrastructure (LiveRamp at 5x revenue). For a company valued at $159B, this represents meaningful incremental value creation.</p>
+    </div>
+  </div>
+</section>
+
+<!-- IMPLEMENTATION ROADMAP -->
+<section id="roadmap">
+  <div class="container">
+    <h2><span class="section-num">08</span>Implementation Roadmap</h2>
+    <p class="section-desc">Phased execution from attribution to full ad platform</p>
+
+    <div class="timeline">
+      <div class="timeline-item">
+        <div class="phase">Phase 1: Foundation (Months 0-12)</div>
+        <h3>Attribution-as-a-Service + Audience Pilots</h3>
+        <ul>
+          <li><strong>Months 0-3:</strong> Hire Head of Ads/Commerce (VP-level, from Meta/Google ads org). Staff initial team of 15-20 (data engineering, privacy engineering, product, BD). Select clean room technology partner or begin in-house build.</li>
+          <li><strong>Months 3-6:</strong> Build tokenization pipeline and data aggregation layer. Negotiate clean room integrations with Meta (Conversions API + Advanced Matching), Google (Customer Match + Store Sales Direct), and one retail media network (Walmart Connect or Roundel). Develop merchant consent framework and update ToS.</li>
+          <li><strong>Months 6-9:</strong> Launch attribution pilot with 5-10 enterprise advertisers and their agency partners. Measure deterministic match rates (target: 30-50% of ad-exposed consumers matched to transactions). Iterate on reporting format and delivery cadence.</li>
+          <li><strong>Months 9-12:</strong> Scale attribution to 50+ advertisers. Begin building audience segment taxonomy. Launch audience pilot with 3-5 SaaS ad platform partners. Publish first case studies with verified ROAS results.</li>
+        </ul>
+        <p><strong>Key Hire:</strong> Chief Privacy Officer with dual expertise in PCI DSS and consumer privacy law. This role is existential for credibility with merchants, regulators, and enterprise clients.</p>
+      </div>
+
+      <div class="timeline-item">
+        <div class="phase">Phase 2: Expansion (Months 12-24)</div>
+        <h3>Audience Scaling + Ad Network MVP</h3>
+        <ul>
+          <li><strong>Months 12-15:</strong> Scale audience segments to 200+ pre-built cohorts across 15+ verticals. Integrate with all major agency holding company DSP stacks. Launch vendor partner program with tiered access (Certified, Premier, Strategic).</li>
+          <li><strong>Months 15-18:</strong> Begin ad network development. Build self-serve campaign manager within merchant dashboard. Design offer format and creative templates. Select initial ad surfaces (digital receipts, post-purchase notifications).</li>
+          <li><strong>Months 18-24:</strong> Launch ad network beta with 1,000 merchants in 3-5 metro areas. Focus on SMB advertisers ($500-$10K/month budgets). Iterate on targeting, bidding, and reporting based on early performance data. Achieve $25M run rate.</li>
+        </ul>
+        <p><strong>Key Milestone:</strong> 500+ agency and SaaS vendor partners actively using attribution or audience products. Combined attribution and audience revenue exceeds $200M annual run rate.</p>
+      </div>
+
+      <div class="timeline-item">
+        <div class="phase">Phase 3: Differentiation (Months 24-36)</div>
+        <h3>Ad Network Scale + Retail Media Infrastructure Launch</h3>
+        <ul>
+          <li><strong>Months 24-30:</strong> Scale ad network to 50,000+ merchants nationwide. Add off-network delivery (programmatic display, CTV, social). Introduce enterprise tier with managed service option. Launch API for vendor/agency campaign management.</li>
+          <li><strong>Months 30-36:</strong> Launch retail media infrastructure platform in private beta with 5-10 mid-market retailers ($500M-$10B annual revenue). Build white-label ad server, audience builder, and measurement suite. Begin programmatic demand integration (The Trade Desk, DV360).</li>
+        </ul>
+        <p><strong>Key Milestone:</strong> Ad network achieves $150M+ in merchant ad spend. First retail media infrastructure clients generating $50M+ in combined ad revenue.</p>
+      </div>
+
+      <div class="timeline-item">
+        <div class="phase">Phase 4: Platform Dominance (Months 36-60)</div>
+        <h3>Full Platform Scale + International Expansion</h3>
+        <ul>
+          <li><strong>Months 36-48:</strong> Scale retail media infrastructure to 50+ retailers. Launch managed service tier for mid-market retailers that lack internal ad ops capability. Expand ad network to international markets (UK, EU, Canada, Australia).</li>
+          <li><strong>Months 48-60:</strong> Achieve $3B+ in combined ad platform revenue. Reach 200,000+ merchants on ad network. 100+ retailers on infrastructure platform. Evaluate spin-off or dedicated business unit structure to capture full multiple.</li>
+        </ul>
+        <p><strong>Key Milestone:</strong> Transaction-powered advertising becomes a top-3 revenue line for the payment processor, contributing 15-20% of total company revenue with significantly higher margins than payment processing.</p>
+      </div>
+    </div>
+
+    <h3>Team Scale</h3>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Function</th>
+            <th>Year 1</th>
+            <th>Year 2</th>
+            <th>Year 3</th>
+            <th>Year 5</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Engineering (data, platform, privacy)</td>
+            <td>40</td>
+            <td>120</td>
+            <td>250</td>
+            <td>500</td>
+          </tr>
+          <tr>
+            <td>Product & Design</td>
+            <td>8</td>
+            <td>25</td>
+            <td>50</td>
+            <td>80</td>
+          </tr>
+          <tr>
+            <td>Sales & Partnerships</td>
+            <td>10</td>
+            <td>40</td>
+            <td>100</td>
+            <td>250</td>
+          </tr>
+          <tr>
+            <td>Ad Operations</td>
+            <td>5</td>
+            <td>20</td>
+            <td>60</td>
+            <td>150</td>
+          </tr>
+          <tr>
+            <td>Legal & Privacy</td>
+            <td>5</td>
+            <td>12</td>
+            <td>25</td>
+            <td>40</td>
+          </tr>
+          <tr style="background:var(--bg-card-alt);">
+            <td><strong>Total Headcount</strong></td>
+            <td><strong>68</strong></td>
+            <td><strong>217</strong></td>
+            <td><strong>485</strong></td>
+            <td><strong>1,020</strong></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- RISKS -->
+<section id="risks">
+  <div class="container">
+    <h2><span class="section-num">09</span>Risks & Mitigations</h2>
+    <p class="section-desc">What could go wrong, and how to protect against it</p>
+
+    <div class="risk-item">
+      <span class="risk-badge high">High</span>
+      <div>
+        <strong>Merchant Opt-Out Risk</strong>
+        <p>Merchants may resist sharing transaction data for advertising purposes, viewing it as a competitive threat or privacy liability. If opt-in rates fall below 40%, the data coverage becomes too sparse for viable audience segments.</p>
+        <p><strong>Mitigation:</strong> Offer merchants direct financial incentives (revenue share on attribution and audience fees), control over data granularity (category-level vs. SKU-level), and transparent dashboards showing exactly how their data is used. Make advertising products a value-add that increases merchant retention on the payment platform. Frame data sharing as a feature, not a concession.</p>
+      </div>
+    </div>
+
+    <div class="risk-item">
+      <span class="risk-badge high">High</span>
+      <div>
+        <strong>Regulatory Enforcement Escalation</strong>
+        <p>FTC, state attorneys general, or EU data protection authorities could challenge the use of payment transaction data for advertising purposes, even with clean room architecture. A high-profile enforcement action could force product changes or create reputational damage.</p>
+        <p><strong>Mitigation:</strong> Proactive engagement with regulators before launch. Publish a transparency report detailing data practices. Implement privacy-by-design architecture that exceeds current regulatory requirements. Maintain a "war chest" of privacy certifications (SOC 2 Type II, ISO 27701, TrustArc). Build in regulatory flexibility: architecture should allow rapid compliance with new requirements without product redesign.</p>
+      </div>
+    </div>
+
+    <div class="risk-item">
+      <span class="risk-badge high">High</span>
+      <div>
+        <strong>Platform Retaliation</strong>
+        <p>Meta, Google, and Amazon could view the payment processor's ad products as competitive and restrict API access, degrade clean room integrations, or launch competing transaction-data products through their own payment solutions (Meta Pay, Google Pay, Amazon Pay).</p>
+        <p><strong>Mitigation:</strong> Phase 1 is deliberately non-competitive: attribution makes Meta and Google more valuable, not less. Build deep integration dependencies before launching competitive products (Layers 3-4). Diversify platform partnerships so no single platform represents more than 30% of revenue. Pursue antitrust-protective positioning: the payment processor as a neutral, cross-platform measurement standard.</p>
+      </div>
+    </div>
+
+    <div class="risk-item">
+      <span class="risk-badge medium">Medium</span>
+      <div>
+        <strong>Data Quality and Coverage Gaps</strong>
+        <p>Transaction data from a payment processor covers card and digital wallet transactions but misses cash payments (~15% of U.S. retail), peer-to-peer transfers, and transactions on competing payment platforms. This creates coverage gaps that reduce audience accuracy and attribution match rates.</p>
+        <p><strong>Mitigation:</strong> Focus initial product on categories where card payment penetration exceeds 85% (restaurants, retail, travel, e-commerce). Supplement with merchant-provided first-party data (loyalty programs, e-commerce). Develop statistical models to account for cash leakage in attribution reporting. Expand coverage through partnerships with complementary payment processors or POS providers.</p>
+      </div>
+    </div>
+
+    <div class="risk-item">
+      <span class="risk-badge medium">Medium</span>
+      <div>
+        <strong>Competitive Response from Block/Square</strong>
+        <p>Block owns Square (merchant POS) and Cash App (consumer identity), giving it a similar structural position. If Block launches a competing ad product, it could fragment the market and reduce the payment processor's first-mover advantage.</p>
+        <p><strong>Mitigation:</strong> Move fast. Block has historically been slow to execute on data monetization despite years of discussion. Its Afterpay acquisition consumed organizational bandwidth through 2025. The payment processor's enterprise client base and higher transaction volume create a more attractive advertiser proposition. Scale advantage compounds: more merchants means better audiences, which attracts more advertisers, which generates more merchant revenue.</p>
+      </div>
+    </div>
+
+    <div class="risk-item">
+      <span class="risk-badge medium">Medium</span>
+      <div>
+        <strong>Brand Safety and Advertiser Backlash</strong>
+        <p>Consumer advocacy groups or media coverage could frame transaction-based advertising as surveillance capitalism, creating PR risk for both the payment processor and advertisers using the platform.</p>
+        <p><strong>Mitigation:</strong> Pre-emptive transparency: publish the privacy architecture, invite independent audits, create a consumer-facing dashboard showing what data is used and how. Position the product as "better ads through better data" rather than "more tracking." Implement consumer opt-out that is genuinely easy to find and use.</p>
+      </div>
+    </div>
+
+    <div class="risk-item">
+      <span class="risk-badge low">Low</span>
+      <div>
+        <strong>Technology Execution Risk</strong>
+        <p>Building a real-time clean room, audience management platform, ad server, and attribution engine requires deep ad tech expertise that a payment company does not currently possess.</p>
+        <p><strong>Mitigation:</strong> Acqui-hire from Cardlytics (which is struggling and shedding talent), The Trade Desk, Criteo, or LiveRamp. Consider targeted acquisition of a clean room startup (InfoSum, Habu) or attribution vendor (Measured, InMarket). Build vs. buy evaluation should favor buying for time-to-market; infrastructure can be rebuilt in-house once the product market fit is validated.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<div class="footer">
+  <div class="container">
+    <p class="disclaimer">This analysis is a strategic thought exercise. Market figures are sourced from WARC, eMarketer, company filings, and industry reports as cited. Revenue projections are illustrative and based on comparable company benchmarks and market sizing assumptions. No confidential or proprietary information from any named company was used in the preparation of this document.</p>
+    <p style="margin-top:1rem;">July 2026</p>
+  </div>
+</div>
+
+</body>
+</html>
